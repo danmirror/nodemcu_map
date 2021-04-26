@@ -1,7 +1,15 @@
+// serial
+
+#include <SoftwareSerial.h>
+SoftwareSerial s(D6,D5);
+String data;
+String container
+
+// website
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h> 
 #include <ESP8266HTTPClient.h>
- 
+
 const char *ssid = "dann";  
 const char *password = "danu12345";
  
@@ -26,7 +34,9 @@ int cycle= 1;
 void setup() {
   delay(1000);
   Serial.begin(115200);
-  
+  s.begin(9600);
+
+
   WiFi.begin(ssid, password);     //Connect to your WiFi router
   Serial.println("");
  
@@ -48,8 +58,61 @@ void setup() {
 }
  
 void loop() {
- send();
- delay(5000);
+  if(s.available()>0){
+    while(s..available()>0){
+      container +=(char)s.read();
+    }
+  }
+
+  for (int i=0; i<container.length(); i++){
+
+    if (container[i] == ","){
+      lock +=1;
+
+    }
+    if(lock ==0){
+      id_car += container[i];
+    }
+    else if(lock ==0){
+      btn_empty += container[i];
+    }
+    else if(lock ==0){
+      btn_filled += container[i];
+    }
+    else if(lock ==0){
+      btn_loading += container[i];
+    }
+    else if(lock ==0){
+      btn_trash += container[i];
+    }
+    else if(lock ==0){
+      latitude += container[i];
+    }
+    else if(lock ==0){
+      longitude += container[i];
+    }
+    else if(lock ==0){
+      xgyro += container[i];
+    }
+    else if(lock ==0){
+      ygyro += container[i];
+    }
+    else if(lock ==0){
+      speeds += container[i];
+    }
+    else if(lock ==0){
+      temp += container[i];
+    }
+    else if(lock ==0){
+      cycle += container[i];
+    }
+  
+  }
+
+
+  container = "";
+  send();
+  delay(5000);
 }
 
 void send(){
